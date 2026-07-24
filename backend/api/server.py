@@ -19,6 +19,10 @@ sessions = {}
 login_attempts = {}
 AUDIT_LOG_FILE = "audit_log.json"
 
+# Pre-seeded demo accounts (for presentations and research demos)
+users["admin@vaultview.com"] = {"user_id": 1, "password": "admin123", "role": "admin"}
+users["analyst@vaultview.com"] = {"user_id": 2, "password": "analyst123", "role": "user"}
+
 def log_hostile_event(ip, email, trust_score, request_count):
     entry = {
         "timestamp": datetime.datetime.now().isoformat(),

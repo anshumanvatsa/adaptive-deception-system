@@ -1,7 +1,26 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Shield, Eye, EyeOff, LogIn } from "lucide-react";
+import { Shield, Eye, EyeOff, LogIn, Zap } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+
+const DEMO_ACCOUNTS = [
+  {
+    label: "Admin",
+    badge: "Full Access",
+    badgeColor: "from-violet-500 to-purple-600",
+    email: "admin@vaultview.com",
+    password: "admin123",
+    desc: "Trust score 85 — TRUSTED tier, real decrypted data",
+  },
+  {
+    label: "Analyst",
+    badge: "Limited",
+    badgeColor: "from-cyan-500 to-blue-600",
+    email: "analyst@vaultview.com",
+    password: "analyst123",
+    desc: "Trust score 70 — TRUSTED tier, real decrypted data",
+  },
+];
 
 const Login = () => {
   const { login } = useAuth();
@@ -27,6 +46,12 @@ const Login = () => {
     }
   };
 
+  const fillDemo = (acc: (typeof DEMO_ACCOUNTS)[0]) => {
+    setEmail(acc.email);
+    setPassword(acc.password);
+    setError(null);
+  };
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
       {/* Ambient glow */}
@@ -35,16 +60,55 @@ const Login = () => {
         <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-accent/10 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative w-full max-w-md">
-        {/* Card */}
+      <div className="relative w-full max-w-md space-y-4">
+        {/* Demo accounts strip */}
+        <div className="glass rounded-2xl p-4 border border-white/[0.08]">
+          <p className="text-xs text-muted-foreground uppercase tracking-widest font-medium mb-3 flex items-center gap-1.5">
+            <Zap className="w-3 h-3 text-yellow-400" />
+            Quick Demo — click to auto-fill
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            {DEMO_ACCOUNTS.map((acc) => (
+              <button
+                key={acc.email}
+                type="button"
+                onClick={() => fillDemo(acc)}
+                className="text-left p-3 rounded-xl bg-white/[0.04] border border-white/[0.06] hover:border-primary/40 hover:bg-white/[0.08] transition-all group"
+              >
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span
+                    className={`text-[10px] font-bold px-2 py-0.5 rounded-full bg-gradient-to-r ${acc.badgeColor} text-white`}
+                  >
+                    {acc.label}
+                  </span>
+                  <span className="text-[10px] text-muted-foreground">
+                    {acc.badge}
+                  </span>
+                </div>
+                <p className="text-xs text-foreground/80 font-mono truncate">
+                  {acc.email}
+                </p>
+                <p className="text-[10px] text-muted-foreground mt-0.5 leading-tight">
+                  {acc.desc}
+                </p>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Login card */}
         <div className="glass rounded-2xl p-8 border border-white/[0.08]">
           {/* Logo */}
           <div className="flex flex-col items-center mb-8">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-4 shadow-lg">
               <Shield className="w-6 h-6 text-primary-foreground" />
             </div>
-            <h1 className="text-2xl font-bold text-foreground tracking-tight">VaultView</h1>
-            <p className="text-sm text-muted-foreground mt-1">Sign in to your secure vault</p>
+            <h1 className="text-2xl font-bold text-foreground tracking-tight">
+              VaultView
+            </h1>
+            <p className="text-sm text-muted-foreground mt-1">
+              Sign in to your secure vault
+            </p>
           </div>
 
           {/* Form */}
@@ -85,7 +149,11 @@ const Login = () => {
                   onClick={() => setShowPassword((v) => !v)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showPassword ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
                 </button>
               </div>
             </div>
@@ -114,7 +182,10 @@ const Login = () => {
           {/* Footer */}
           <p className="text-center text-sm text-muted-foreground mt-6">
             Don't have an account?{" "}
-            <Link to="/signup" className="text-primary hover:text-primary/80 font-medium transition-colors">
+            <Link
+              to="/signup"
+              className="text-primary hover:text-primary/80 font-medium transition-colors"
+            >
               Sign up
             </Link>
           </p>
