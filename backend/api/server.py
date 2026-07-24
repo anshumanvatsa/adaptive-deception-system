@@ -10,7 +10,7 @@ from app.trust import calculate_trust
 from app.queries import fetch_all_employees, process_employee
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # ---------------- STORAGE ----------------
 
