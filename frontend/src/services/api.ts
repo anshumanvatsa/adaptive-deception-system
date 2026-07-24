@@ -1,7 +1,7 @@
 // api.ts — VaultView API service layer (v2)
 // All requests use JWT Bearer token for authentication.
 
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const BASE_URL = import.meta.env.VITE_API_URL || "https://adaptive-deception-system.onrender.com";
 
 // ─── Auth ────────────────────────────────────────────────────────────────────
 
