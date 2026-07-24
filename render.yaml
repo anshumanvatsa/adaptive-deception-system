@@ -7,8 +7,8 @@ services:
     startCommand: gunicorn "api.server:app"
     envVars:
       - key: DATABASE_URL
-        value: postgresql://neondb_owner:npg_BgserCuRx5p9@ep-long-sun-am8hr7gx-pooler.c-5.us-east-1.aws.neon.tech/neondb?sslmode=require
+        sync: false
       - key: FERNET_KEY
-        value: uOTVZeUP6Q2iyF_0g0QHzzSkzJGNM_86jfQ9eCY4yzE=
+        sync: false
       - key: JWT_SECRET
-        value: vaultview-jwt-secret-change-in-prod
+        sync: false

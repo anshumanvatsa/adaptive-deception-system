@@ -3,13 +3,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql://neondb_owner:npg_BgserCuRx5p9@ep-long-sun-am8hr7gx-pooler.c-5.us-east-1.aws.neon.tech/neondb?sslmode=require",
-)
+# All secrets MUST be set as environment variables.
+# Never hardcode credentials here — use Render / Vercel dashboard.
+DATABASE_URL = os.getenv("DATABASE_URL")
+FERNET_KEY = os.getenv("FERNET_KEY", "").encode()
+JWT_SECRET = os.getenv("JWT_SECRET", "change-this-in-production")
 
-# Fixed Fernet key (32 url-safe base64-encoded bytes). Do not rotate per run.
-FERNET_KEY = b"uOTVZeUP6Q2iyF_0g0QHzzSkzJGNM_86jfQ9eCY4yzE="
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL environment variable is not set.")
 
-# JWT secret for token signing. Override via JWT_SECRET env var in production.
-JWT_SECRET = os.getenv("JWT_SECRET", "vaultview-jwt-secret-change-in-prod")
+if not FERNET_KEY:
+    raise RuntimeError("FERNET_KEY environment variable is not set.")
