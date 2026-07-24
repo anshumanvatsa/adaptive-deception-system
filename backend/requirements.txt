@@ -1,0 +1,8 @@
+flask
+flask-cors
+psycopg2-binary
+cryptography
+python-dotenv
+PyJWT
+bcrypt
+faker
